@@ -21,7 +21,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Obtiene una lista paginada de propiedades con filtros opcionales
+        /// Gets a paginated list of properties with optional filters.
         /// </summary>
         [HttpGet]
         public async Task<ActionResult<PagedResultDto<PropertyDto>>> GetProperties(
@@ -41,7 +41,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Obtiene los detalles completos de una propiedad específica
+        /// Gets the full details of a specific property.
         /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<PropertyDetailDto>> GetProperty(int id)
@@ -64,7 +64,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Crea una nueva propiedad
+        /// Creates a new property.
         /// </summary>
         [HttpPost]
         public async Task<ActionResult<PropertyDto>> CreateProperty(
@@ -93,7 +93,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Actualiza una propiedad existente
+        /// Updates an existing property.
         /// </summary>
         [HttpPut("{id}")]
         public async Task<ActionResult<PropertyDto>> UpdateProperty(
@@ -124,7 +124,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Elimina una propiedad
+        /// Deletes a property.
         /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProperty(int id)
@@ -147,7 +147,7 @@ namespace RealEstate.API.Controllers
         }
 
         /// <summary>
-        /// Verifica si una propiedad existe
+        /// Checks if a property exists.
         /// </summary>
         [HttpHead("{id}")]
         public async Task<IActionResult> PropertyExists(int id)
