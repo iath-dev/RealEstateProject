@@ -3,6 +3,11 @@
     <ProjectReference Include="..\RealEstate.Core\RealEstate.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference
+      Include="AutoMapper.Extensions.Microsoft.DependencyInjection"
+      Version="12.0.1"
+    />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
     <PackageReference
       Include="Microsoft.Extensions.DependencyInjection.Abstractions"

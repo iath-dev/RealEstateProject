@@ -1,3 +1,4 @@
+using AutoMapper;
 using RealEstate.Core.DTOs;
 using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.IRepositories;
@@ -8,39 +9,24 @@ namespace RealEstate.Infrastructure.Services
     public class OwnerService : IOwnerService
     {
         private readonly IOwnerRepository _ownerRepository;
+        private readonly IMapper _mapper;
 
-        public OwnerService(IOwnerRepository ownerRepository)
+        public OwnerService(IOwnerRepository ownerRepository, IMapper mapper)
         {
             _ownerRepository = ownerRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<OwnerDto>> GetAllOwnersAsync()
         {
             var owners = await _ownerRepository.GetAllAsync();
-            return owners.Select(owner => new OwnerDto
-            {
-                IdOwner = owner.IdOwner,
-                Name = owner.Name,
-                Address = owner.Address,
-                Photo = owner.Photo,
-                Birthday = owner.Birthday,
-            });
+            return _mapper.Map<IEnumerable<OwnerDto>>(owners);
         }
 
         public async Task<OwnerDto?> GetOwnerByIdAsync(int id)
         {
             var owner = await _ownerRepository.GetByIdAsync(id);
-            if (owner == null)
-                return null;
-
-            return new OwnerDto
-            {
-                IdOwner = owner.IdOwner,
-                Name = owner.Name,
-                Address = owner.Address,
-                Photo = owner.Photo,
-                Birthday = owner.Birthday,
-            };
+            return owner != null ? _mapper.Map<OwnerDto>(owner) : null;
         }
 
         public async Task<OwnerDto> CreateOwnerAsync(OwnerDto ownerDto)
@@ -49,19 +35,12 @@ namespace RealEstate.Infrastructure.Services
             var existingOwners = await _ownerRepository.GetAllAsync();
             var newId = existingOwners.Any() ? existingOwners.Max(o => o.IdOwner) + 1 : 1;
 
-            var owner = new Owner
-            {
-                IdOwner = newId,
-                Name = ownerDto.Name,
-                Address = ownerDto.Address,
-                Photo = ownerDto.Photo,
-                Birthday = ownerDto.Birthday,
-            };
+            var owner = _mapper.Map<Owner>(ownerDto);
+            owner.IdOwner = newId;
 
             await _ownerRepository.AddAsync(owner);
 
-            ownerDto.IdOwner = owner.IdOwner;
-            return ownerDto;
+            return _mapper.Map<OwnerDto>(owner);
         }
 
         public async Task<OwnerDto?> UpdateOwnerAsync(int id, OwnerDto ownerDto)
@@ -70,21 +49,12 @@ namespace RealEstate.Infrastructure.Services
             if (existingOwner == null)
                 return null;
 
-            existingOwner.Name = ownerDto.Name;
-            existingOwner.Address = ownerDto.Address;
-            existingOwner.Photo = ownerDto.Photo;
-            existingOwner.Birthday = ownerDto.Birthday;
+            _mapper.Map(ownerDto, existingOwner);
+            existingOwner.IdOwner = id; // Asegurar que el ID no cambie
 
             await _ownerRepository.UpdateAsync(existingOwner);
 
-            return new OwnerDto
-            {
-                IdOwner = existingOwner.IdOwner,
-                Name = existingOwner.Name,
-                Address = existingOwner.Address,
-                Photo = existingOwner.Photo,
-                Birthday = existingOwner.Birthday,
-            };
+            return _mapper.Map<OwnerDto>(existingOwner);
         }
 
         public async Task<bool> DeleteOwnerAsync(int id)

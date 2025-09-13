@@ -1,3 +1,4 @@
+using AutoMapper;
 using RealEstate.Core.DTOs;
 using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.IRepositories;
@@ -11,18 +12,21 @@ namespace RealEstate.Infrastructure.Services
         private readonly IOwnerRepository _ownerRepository;
         private readonly IPropertyImageRepository _propertyImageRepository;
         private readonly IPropertyTraceRepository _propertyTraceRepository;
+        private readonly IMapper _mapper;
 
         public PropertyService(
             IPropertyRepository propertyRepository,
             IOwnerRepository ownerRepository,
             IPropertyImageRepository propertyImageRepository,
-            IPropertyTraceRepository propertyTraceRepository
+            IPropertyTraceRepository propertyTraceRepository,
+            IMapper mapper
         )
         {
             _propertyRepository = propertyRepository;
             _ownerRepository = ownerRepository;
             _propertyImageRepository = propertyImageRepository;
             _propertyTraceRepository = propertyTraceRepository;
+            _mapper = mapper;
         }
 
         public async Task<PagedResultDto<PropertyDto>> GetPropertiesAsync(PropertyFilterDto filters)
@@ -37,20 +41,11 @@ namespace RealEstate.Infrastructure.Services
                     property.IdProperty
                 );
 
-                propertyDtos.Add(
-                    new PropertyDto
-                    {
-                        IdProperty = property.IdProperty,
-                        Name = property.Name,
-                        Address = property.Address,
-                        Price = property.Price,
-                        CodeInternal = property.CodeInternal,
-                        Year = property.Year,
-                        IdOwner = property.IdOwner,
-                        OwnerName = owner?.Name ?? string.Empty,
-                        Image = firstImage?.File,
-                    }
-                );
+                var propertyDto = _mapper.Map<PropertyDto>(property);
+                propertyDto.OwnerName = owner?.Name ?? string.Empty;
+                propertyDto.Image = firstImage?.File;
+
+                propertyDtos.Add(propertyDto);
             }
 
             return new PagedResultDto<PropertyDto>
@@ -68,66 +63,43 @@ namespace RealEstate.Infrastructure.Services
             if (property == null)
                 return null;
 
-            var images = await _propertyImageRepository.GetByPropertyIdAsync(id);
-            var traces = await _propertyTraceRepository.GetByPropertyIdAsync(id);
-
-            return new PropertyDetailDto
+            if (property.Owner == null)
             {
-                IdProperty = property.IdProperty,
-                Name = property.Name,
-                Address = property.Address,
-                Price = property.Price,
-                CodeInternal = property.CodeInternal,
-                Year = property.Year,
-                Owner =
-                    property.Owner != null
-                        ? new OwnerDto
-                        {
-                            IdOwner = property.Owner.IdOwner,
-                            Name = property.Owner.Name,
-                            Address = property.Owner.Address,
-                            Photo = property.Owner.Photo,
-                            Birthday = property.Owner.Birthday,
-                        }
-                        : new OwnerDto(),
-                Images = images
-                    .Select(img => new PropertyImageDto
-                    {
-                        IdPropertyImage = img.IdPropertyImage,
-                        File = img.File,
-                        Enabled = img.Enabled,
-                    })
-                    .ToList(),
-            };
+                property.Owner = await _ownerRepository.GetByIdAsync(property.IdOwner);
+            }
+
+            if (!property.PropertyImages.Any())
+            {
+                var images = await _propertyImageRepository.GetByPropertyIdAsync(id);
+                property.PropertyImages = images.ToList();
+            }
+
+            if (!property.PropertyTraces.Any())
+            {
+                var traces = await _propertyTraceRepository.GetByPropertyIdAsync(id);
+                property.PropertyTraces = traces.ToList();
+            }
+
+            return _mapper.Map<PropertyDetailDto>(property);
         }
 
         public async Task<PropertyDto> CreatePropertyAsync(PropertyDto propertyDto)
         {
-            // Generar nuevo ID (en un escenario real, MongoDB puede manejar esto automáticamente)
             var existingProperties = await _propertyRepository.GetAllAsync();
             var newId = existingProperties.Any()
                 ? existingProperties.Max(p => p.IdProperty) + 1
                 : 1;
 
-            var property = new Property
-            {
-                IdProperty = newId,
-                Name = propertyDto.Name,
-                Address = propertyDto.Address,
-                Price = propertyDto.Price,
-                CodeInternal = propertyDto.CodeInternal,
-                Year = propertyDto.Year,
-                IdOwner = propertyDto.IdOwner,
-            };
+            var property = _mapper.Map<Property>(propertyDto);
+            property.IdProperty = newId;
 
             await _propertyRepository.AddAsync(property);
 
-            // Retornar el DTO actualizado
             var owner = await _ownerRepository.GetByIdAsync(property.IdOwner);
-            propertyDto.IdProperty = property.IdProperty;
-            propertyDto.OwnerName = owner?.Name ?? string.Empty;
+            var resultDto = _mapper.Map<PropertyDto>(property);
+            resultDto.OwnerName = owner?.Name ?? string.Empty;
 
-            return propertyDto;
+            return resultDto;
         }
 
         public async Task<PropertyDto?> UpdatePropertyAsync(int id, PropertyDto propertyDto)
@@ -136,12 +108,8 @@ namespace RealEstate.Infrastructure.Services
             if (existingProperty == null)
                 return null;
 
-            existingProperty.Name = propertyDto.Name;
-            existingProperty.Address = propertyDto.Address;
-            existingProperty.Price = propertyDto.Price;
-            existingProperty.CodeInternal = propertyDto.CodeInternal;
-            existingProperty.Year = propertyDto.Year;
-            existingProperty.IdOwner = propertyDto.IdOwner;
+            _mapper.Map(propertyDto, existingProperty);
+            existingProperty.IdProperty = id;
 
             await _propertyRepository.UpdateAsync(existingProperty);
 
@@ -150,18 +118,11 @@ namespace RealEstate.Infrastructure.Services
                 existingProperty.IdProperty
             );
 
-            return new PropertyDto
-            {
-                IdProperty = existingProperty.IdProperty,
-                Name = existingProperty.Name,
-                Address = existingProperty.Address,
-                Price = existingProperty.Price,
-                CodeInternal = existingProperty.CodeInternal,
-                Year = existingProperty.Year,
-                IdOwner = existingProperty.IdOwner,
-                OwnerName = owner?.Name ?? string.Empty,
-                Image = firstImage?.File,
-            };
+            var resultDto = _mapper.Map<PropertyDto>(existingProperty);
+            resultDto.OwnerName = owner?.Name ?? string.Empty;
+            resultDto.Image = firstImage?.File;
+
+            return resultDto;
         }
 
         public async Task<bool> DeletePropertyAsync(int id)
