@@ -1,4 +1,6 @@
+using RealEstate.Core.Interfaces.IRepositories;
 using RealEstate.Infrastructure.Data;
+using RealEstate.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,12 @@ builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("Mo
 
 // Register MongoDB Context
 builder.Services.AddSingleton<MongoDbContext>();
+
+// Register Repositories
+builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
+builder.Services.AddScoped<IPropertyTraceRepository, PropertyTraceRepository>();
 
 // Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +39,14 @@ builder.Services.AddSwaggerGen(options =>
             },
         }
     );
+
+    // Include XML comments if available
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
 });
 
 var app = builder.Build();
@@ -57,7 +73,10 @@ else
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
+
+app.UseAuthorization();
 
 app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
@@ -67,4 +86,4 @@ app.Logger.LogInformation(
     app.Environment.IsDevelopment() ? "https://localhost:5001" : "Disabled in production"
 );
 
-app.Run();
+await app.RunAsync();
