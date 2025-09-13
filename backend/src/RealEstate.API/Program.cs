@@ -1,8 +1,16 @@
+using RealEstate.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
+
+// Configure MongoDB Context
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
+
+// Register MongoDB Context
+builder.Services.AddSingleton<MongoDbContext>();
 
 // Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
@@ -50,4 +58,13 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+
+app.Logger.LogInformation("🚀 Real Estate API starting up...");
+app.Logger.LogInformation(
+    "📝 Swagger UI available at: {SwaggerUrl}",
+    app.Environment.IsDevelopment() ? "https://localhost:5001" : "Disabled in production"
+);
+
 app.Run();
