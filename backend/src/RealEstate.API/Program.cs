@@ -1,6 +1,8 @@
 using RealEstate.Core.Interfaces.IRepositories;
+using RealEstate.Core.Interfaces.IServices;
 using RealEstate.Infrastructure.Data;
 using RealEstate.Infrastructure.Repositories;
+using RealEstate.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,10 @@ builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
 builder.Services.AddScoped<IPropertyTraceRepository, PropertyTraceRepository>();
+
+// Register Services
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
 
 // Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
