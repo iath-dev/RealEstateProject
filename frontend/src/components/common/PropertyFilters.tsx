@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useRef } from 'react';
 
+import { XIcon } from 'lucide-react';
 import { useForm, Controller, type ControllerRenderProps } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { PopoverTrigger, Popover, PopoverContent } from '@/components/ui/popover';
+import { useBreakpoint } from '@/hooks/useMediaQuery';
 
 export type PropertyFiltersModel = {
   name?: string;
@@ -23,6 +30,7 @@ type FormValues = {
 };
 
 export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
+  const isDesktop = useBreakpoint('desktop');
   const { control, reset, watch, setValue } = useForm<FormValues>({
     defaultValues: { name: '', address: '', minPrice: '', maxPrice: '' },
   });
@@ -83,11 +91,7 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
           name="name"
           control={control}
           render={({ field }: { field: ControllerRenderProps<FormValues, 'name'> }) => (
-            <input
-              {...field}
-              placeholder="Name"
-              className="input input-bordered w-full max-lg:w-full"
-            />
+            <Input {...field} placeholder="Name" className="w-full max-lg:w-full" />
           )}
         />
 
@@ -96,7 +100,7 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
             name="address"
             control={control}
             render={({ field }: { field: ControllerRenderProps<FormValues, 'address'> }) => (
-              <input {...field} placeholder="Address" className="input input-bordered w-full" />
+              <Input {...field} placeholder="Address" className="w-full" />
             )}
           />
 
@@ -104,12 +108,7 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
             name="minPrice"
             control={control}
             render={({ field }: { field: ControllerRenderProps<FormValues, 'minPrice'> }) => (
-              <input
-                {...field}
-                placeholder="Min Price"
-                type="number"
-                className="input input-bordered w-40"
-              />
+              <Input {...field} placeholder="Min Price" type="number" />
             )}
           />
 
@@ -117,100 +116,76 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
             name="maxPrice"
             control={control}
             render={({ field }: { field: ControllerRenderProps<FormValues, 'maxPrice'> }) => (
-              <input
-                {...field}
-                placeholder="Max Price"
-                type="number"
-                className="input input-bordered w-40"
-              />
+              <Input {...field} placeholder="Max Price" type="number" />
             )}
           />
         </div>
 
-        <section className="lg:hidden">
-          <button
-            className="btn btn-square "
-            title="Show filters"
-            type="button"
-            popoverTarget="filter-options"
-          >
-            <svg className="size-[1em]">
-              <use xlinkHref="/icons.svg#icon-filter" />
-            </svg>
-          </button>
+        {!isDesktop && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button title="Show filters" type="button" popoverTarget="filter-options">
+                <svg className="size-[1em]">
+                  <use xlinkHref="/icons.svg#icon-filter" />
+                </svg>
+              </Button>
+            </PopoverTrigger>
 
-          <div
-            id="filter-options"
-            popover="auto"
-            className="[position-area:bottom_left] w-full max-w-md p-4 bg-base-100 rounded-md shadow-lg backdrop:bg-black/20 backdrop:blur-sm"
-            role="dialog"
-          >
-            <div className="flex flex-col gap-2">
-              <Controller
-                name="address"
-                control={control}
-                render={({ field }: { field: ControllerRenderProps<FormValues, 'address'> }) => (
-                  <input {...field} placeholder="Address" className="input input-bordered w-full" />
-                )}
-              />
+            <PopoverContent align="end" className="w-64" side="bottom" sideOffset={8}>
+              <div className="flex flex-col gap-2">
+                <Controller
+                  name="address"
+                  control={control}
+                  render={({ field }: { field: ControllerRenderProps<FormValues, 'address'> }) => (
+                    <Input {...field} placeholder="Address" className="w-full" />
+                  )}
+                />
 
-              <Controller
-                name="minPrice"
-                control={control}
-                render={({ field }: { field: ControllerRenderProps<FormValues, 'minPrice'> }) => (
-                  <input
-                    {...field}
-                    placeholder="Min Price"
-                    type="number"
-                    className="input input-bordered w-full"
-                  />
-                )}
-              />
+                <Controller
+                  name="minPrice"
+                  control={control}
+                  render={({ field }: { field: ControllerRenderProps<FormValues, 'minPrice'> }) => (
+                    <Input {...field} placeholder="Min Price" type="number" className="w-full" />
+                  )}
+                />
 
-              <Controller
-                name="maxPrice"
-                control={control}
-                render={({ field }: { field: ControllerRenderProps<FormValues, 'maxPrice'> }) => (
-                  <input
-                    {...field}
-                    placeholder="Max Price"
-                    type="number"
-                    className="input input-bordered w-full"
-                  />
-                )}
-              />
-            </div>
-          </div>
-        </section>
+                <Controller
+                  name="maxPrice"
+                  control={control}
+                  render={({ field }: { field: ControllerRenderProps<FormValues, 'maxPrice'> }) => (
+                    <Input {...field} placeholder="Max Price" type="number" className="w-full" />
+                  )}
+                />
+              </div>
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
 
       <div className="w-full mt-4 flex flex-wrap items-center gap-2">
         {changedFields.map((f) => (
-          <span
+          <Badge
             key={f.key}
             onClick={() => clearField(f.key)}
             role="button"
-            className="badge badge-secondary not-hover:badge-soft cursor-pointer group"
+            variant="outline"
+            className="group cursor-pointer"
             title={`Clear ${f.label}`}
           >
-            <span className="contents">
-              {f.label}: {f.value}
-            </span>
-            <svg className="size-[1.2em] hidden group-hover:inline-block">
-              <use xlinkHref="/icons.svg#icon-close" />
-            </svg>
-          </span>
+            <XIcon className="hidden group-hover:inline-block" />
+            {f.label}: {f.value}
+          </Badge>
         ))}
 
         {changedFields.length > 0 && (
-          <span
+          <Badge
             onClick={clearAll}
             role="button"
-            className="badge badge-accent not-hover:badge-soft transition-colors duration-400 cursor-pointer"
+            className="cursor-pointer"
             title="Clear all filters"
           >
             Clear all
-          </span>
+          </Badge>
         )}
       </div>
     </section>
