@@ -28,14 +28,11 @@ namespace RealEstate.Core.Entities
         [BsonElement("idOwner")]
         public int IdOwner { get; set; }
 
-        [BsonIgnore]
         public virtual Owner? Owner { get; set; }
 
-        [BsonIgnore]
         public virtual ICollection<PropertyImage> PropertyImages { get; set; } =
             new List<PropertyImage>();
 
-        [BsonIgnore]
         public virtual ICollection<PropertyTrace> PropertyTraces { get; set; } =
             new List<PropertyTrace>();
     }

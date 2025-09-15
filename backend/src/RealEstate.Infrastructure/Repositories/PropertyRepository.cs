@@ -47,33 +47,34 @@ namespace RealEstate.Infrastructure.Repositories
 
         public async Task<Property?> GetWithDetailsAsync(int id)
         {
-            var property = await GetByIdAsync(id);
-            if (property == null)
-                return null;
+            var agg = _context
+                .Properties.Aggregate()
+                .Match(p => p.IdProperty == id)
+                .Lookup<Property, Owner, Property>(
+                    _context.Owners,
+                    p => p.IdOwner,
+                    o => o.IdOwner,
+                    p => p.Owner
+                )
+                .Unwind<Property, Property>(
+                    p => p.Owner,
+                    new AggregateUnwindOptions<Property> { PreserveNullAndEmptyArrays = true }
+                )
+                .Lookup<Property, PropertyImage, Property>(
+                    _context.PropertyImages,
+                    p => p.IdProperty,
+                    i => i.IdProperty,
+                    p => p.PropertyImages
+                )
+                .Lookup<Property, PropertyTrace, Property>(
+                    _context.PropertyTraces,
+                    p => p.IdProperty,
+                    t => t.IdProperty,
+                    p => p.PropertyTraces
+                );
 
-            // Cargar owner
-            var owner = await _context
-                .Owners.Find(o => o.IdOwner == property.IdOwner)
-                .FirstOrDefaultAsync();
-
-            if (owner != null)
-                property.Owner = owner;
-
-            // Cargar imágenes
-            var images = await _context
-                .PropertyImages.Find(img => img.IdProperty == property.IdProperty)
-                .ToListAsync();
-
-            property.PropertyImages = images;
-
-            // Cargar traces
-            var traces = await _context
-                .PropertyTraces.Find(trace => trace.IdProperty == property.IdProperty)
-                .ToListAsync();
-
-            property.PropertyTraces = traces;
-
-            return property;
+            var result = await agg.FirstOrDefaultAsync();
+            return result;
         }
 
         public async Task<IEnumerable<Property>> GetByFiltersAsync(PropertyFilterDto filters)

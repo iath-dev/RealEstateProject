@@ -58,6 +58,23 @@ builder.Services.AddSwaggerGen(options =>
     }
 });
 
+builder.Services.AddCors(options =>
+{
+    // Política para desarrollo (más permisiva)
+    options.AddPolicy(
+        "DevelopmentPolicy",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173")
+                .AllowAnyMethod() // GET, POST, PUT, DELETE, etc.
+                .AllowAnyHeader() // Content-Type, Authorization, etc.
+                .AllowCredentials() // Permite cookies y headers de autenticación
+                .WithExposedHeaders("X-Total-Count", "X-Page-Number"); // Headers personalizados expuestos
+        }
+    );
+});
+
 // Add logging services
 builder.Services.AddLogging(logging =>
 {
@@ -70,6 +87,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("DevelopmentPolicy");
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {

@@ -24,10 +24,10 @@ namespace RealEstate.Infrastructure.Data
         public IMongoCollection<Owner> Owners => _database.GetCollection<Owner>("owners");
 
         public IMongoCollection<PropertyImage> PropertyImages =>
-            _database.GetCollection<PropertyImage>("propertyImages");
+            _database.GetCollection<PropertyImage>("property_images");
 
         public IMongoCollection<PropertyTrace> PropertyTraces =>
-            _database.GetCollection<PropertyTrace>("propertyTraces");
+            _database.GetCollection<PropertyTrace>("property_traces");
 
         private static void ConfigureMongoDb()
         {
