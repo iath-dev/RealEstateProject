@@ -414,7 +414,7 @@ $RECYCLE.BIN/
 Dockerfile.dev
 
 # MongoDB data (if running locally)
-data/
+# data/*
 
 # SSL certificates
 *.crt

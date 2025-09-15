@@ -1,0 +1,358 @@
+// backend/data/seed/02-sample-properties.js
+
+db = db.getSiblingDB("realestate");
+
+// Limpiar colecciones existentes
+db.owners.deleteMany({});
+db.properties.deleteMany({});
+db.property_images.deleteMany({});
+db.property_traces.deleteMany({});
+
+// Insertar propietarios según el esquema
+db.owners.insertMany([
+  {
+    _id: 1,
+    name: "María García Rodríguez",
+    address: "Carrera 15 #45-67, Barrio El Peñón, Cali",
+    photo: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400",
+    birthday: new Date("1985-03-15T00:00:00Z"),
+    createdAt: new Date("2024-01-10T10:00:00Z"),
+    updatedAt: new Date("2024-01-10T10:00:00Z"),
+  },
+  {
+    _id: 2,
+    name: "Carlos Andrés Rodríguez",
+    address: "Calle 70 #23-45, Barrio Granada, Cali",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+    birthday: new Date("1978-11-22T00:00:00Z"),
+    createdAt: new Date("2024-01-11T14:30:00Z"),
+    updatedAt: new Date("2024-01-11T14:30:00Z"),
+  },
+  {
+    _id: 3,
+    name: "Ana Lucía Martínez",
+    address: "Av. Roosevelt #34-56, Barrio Normandía, Cali",
+    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400",
+    birthday: new Date("1990-07-08T00:00:00Z"),
+    createdAt: new Date("2024-01-12T09:15:00Z"),
+    updatedAt: new Date("2024-01-12T09:15:00Z"),
+  },
+  {
+    _id: 4,
+    name: "Luis Fernando Hernández",
+    address: "Calle 5 #12-34, Barrio San Antonio, Cali",
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
+    birthday: new Date("1982-12-03T00:00:00Z"),
+    createdAt: new Date("2024-01-13T16:45:00Z"),
+    updatedAt: new Date("2024-01-13T16:45:00Z"),
+  },
+  {
+    _id: 5,
+    name: "Sofía Elena López",
+    address: "Carrera 100 #15-25, Ciudad Jardín, Cali",
+    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400",
+    birthday: new Date("1987-05-20T00:00:00Z"),
+    createdAt: new Date("2024-01-14T11:20:00Z"),
+    updatedAt: new Date("2024-01-14T11:20:00Z"),
+  },
+  {
+    _id: 6,
+    name: "Miguel Ángel Torres",
+    address: "Km 18 Vía Pance, Cali",
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+    birthday: new Date("1975-09-14T00:00:00Z"),
+    createdAt: new Date("2024-01-15T08:00:00Z"),
+    updatedAt: new Date("2024-01-15T08:00:00Z"),
+  },
+]);
+
+// Insertar propiedades según el esquema
+db.properties.insertMany([
+  {
+    _id: 1,
+    name: "Casa Moderna en Zona Norte",
+    address: "Av. Principal 123, Zona Norte, Cali",
+    price: NumberDecimal("350000.00"),
+    codeInternal: "PROP-2024-001",
+    year: 2020,
+    idOwner: 1,
+    createdAt: new Date("2024-01-10T10:00:00Z"),
+    updatedAt: new Date("2024-01-10T10:00:00Z"),
+  },
+  {
+    _id: 2,
+    name: "Apartamento Céntrico con Vista",
+    address: "Calle 5 #45-67, Centro, Cali",
+    price: NumberDecimal("180000.00"),
+    codeInternal: "PROP-2024-002",
+    year: 2018,
+    idOwner: 2,
+    createdAt: new Date("2024-01-11T14:30:00Z"),
+    updatedAt: new Date("2024-01-11T14:30:00Z"),
+  },
+  {
+    _id: 3,
+    name: "Casa Familiar con Jardín",
+    address: "Carrera 15 #78-90, Normandía, Cali",
+    price: NumberDecimal("280000.00"),
+    codeInternal: "PROP-2024-003",
+    year: 2019,
+    idOwner: 3,
+    createdAt: new Date("2024-01-12T09:15:00Z"),
+    updatedAt: new Date("2024-01-12T09:15:00Z"),
+  },
+  {
+    _id: 4,
+    name: "Penthouse de Lujo",
+    address: "Av. Roosevelt #34-56, Granada, Cali",
+    price: NumberDecimal("450000.00"),
+    codeInternal: "PROP-2024-004",
+    year: 2021,
+    idOwner: 1,
+    createdAt: new Date("2024-01-13T16:45:00Z"),
+    updatedAt: new Date("2024-01-13T16:45:00Z"),
+  },
+  {
+    _id: 5,
+    name: "Casa de Campo con Piscina",
+    address: "Km 18 Vía Pance, Cali",
+    price: NumberDecimal("420000.00"),
+    codeInternal: "PROP-2024-005",
+    year: 2022,
+    idOwner: 4,
+    createdAt: new Date("2024-01-14T11:20:00Z"),
+    updatedAt: new Date("2024-01-14T11:20:00Z"),
+  },
+  {
+    _id: 6,
+    name: "Apartamento Estudiantil",
+    address: "Calle 70 #23-45, Cerca Universidad, Cali",
+    price: NumberDecimal("120000.00"),
+    codeInternal: "PROP-2024-006",
+    year: 2017,
+    idOwner: 5,
+    createdAt: new Date("2024-01-15T08:00:00Z"),
+    updatedAt: new Date("2024-01-15T08:00:00Z"),
+  },
+  {
+    _id: 7,
+    name: "Casa Tradicional Restaurada",
+    address: "Barrio San Antonio, Cali",
+    price: NumberDecimal("220000.00"),
+    codeInternal: "PROP-2024-007",
+    year: 1995,
+    idOwner: 2,
+    createdAt: new Date("2024-01-16T13:10:00Z"),
+    updatedAt: new Date("2024-01-16T13:10:00Z"),
+  },
+  {
+    _id: 8,
+    name: "Loft Industrial",
+    address: "Zona Rosa, Cali",
+    price: NumberDecimal("190000.00"),
+    codeInternal: "PROP-2024-008",
+    year: 2016,
+    idOwner: 3,
+    createdAt: new Date("2024-01-17T15:30:00Z"),
+    updatedAt: new Date("2024-01-17T15:30:00Z"),
+  },
+  {
+    _id: 9,
+    name: "Villa con Vista a las Montañas",
+    address: "Alto de las Palmas, Cali",
+    price: NumberDecimal("520000.00"),
+    codeInternal: "PROP-2024-009",
+    year: 2023,
+    idOwner: 6,
+    createdAt: new Date("2024-01-18T10:45:00Z"),
+    updatedAt: new Date("2024-01-18T10:45:00Z"),
+  },
+  {
+    _id: 10,
+    name: "Duplex en Conjunto Cerrado",
+    address: "Ciudad Jardín, Cali",
+    price: NumberDecimal("310000.00"),
+    codeInternal: "PROP-2024-010",
+    year: 2020,
+    idOwner: 4,
+    createdAt: new Date("2024-01-19T12:00:00Z"),
+    updatedAt: new Date("2024-01-19T12:00:00Z"),
+  },
+]);
+
+// Insertar imágenes de propiedades
+db.property_images.insertMany([
+  {
+    _id: 1,
+    idProperty: 1,
+    file: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-10T10:00:00Z"),
+    updatedAt: new Date("2024-01-10T10:00:00Z"),
+  },
+  {
+    _id: 2,
+    idProperty: 1,
+    file: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-10T10:05:00Z"),
+    updatedAt: new Date("2024-01-10T10:05:00Z"),
+  },
+  {
+    _id: 3,
+    idProperty: 2,
+    file: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-11T14:30:00Z"),
+    updatedAt: new Date("2024-01-11T14:30:00Z"),
+  },
+  {
+    _id: 4,
+    idProperty: 3,
+    file: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-12T09:15:00Z"),
+    updatedAt: new Date("2024-01-12T09:15:00Z"),
+  },
+  {
+    _id: 5,
+    idProperty: 4,
+    file: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-13T16:45:00Z"),
+    updatedAt: new Date("2024-01-13T16:45:00Z"),
+  },
+  {
+    _id: 6,
+    idProperty: 5,
+    file: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-14T11:20:00Z"),
+    updatedAt: new Date("2024-01-14T11:20:00Z"),
+  },
+  {
+    _id: 7,
+    idProperty: 6,
+    file: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-15T08:00:00Z"),
+    updatedAt: new Date("2024-01-15T08:00:00Z"),
+  },
+  {
+    _id: 8,
+    idProperty: 7,
+    file: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-16T13:10:00Z"),
+    updatedAt: new Date("2024-01-16T13:10:00Z"),
+  },
+  {
+    _id: 9,
+    idProperty: 8,
+    file: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-17T15:30:00Z"),
+    updatedAt: new Date("2024-01-17T15:30:00Z"),
+  },
+  {
+    _id: 10,
+    idProperty: 9,
+    file: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-18T10:45:00Z"),
+    updatedAt: new Date("2024-01-18T10:45:00Z"),
+  },
+  {
+    _id: 11,
+    idProperty: 10,
+    file: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800",
+    enabled: true,
+    createdAt: new Date("2024-01-19T12:00:00Z"),
+    updatedAt: new Date("2024-01-19T12:00:00Z"),
+  },
+]);
+
+// Insertar trazas de propiedades (historial de ventas)
+db.property_traces.insertMany([
+  {
+    _id: 1,
+    dateSale: new Date("2024-01-10T10:00:00Z"),
+    name: "Venta Inicial",
+    value: NumberDecimal("350000.00"),
+    tax: NumberDecimal("21000.00"),
+    idProperty: 1,
+    createdAt: new Date("2024-01-10T10:00:00Z"),
+    updatedAt: new Date("2024-01-10T10:00:00Z"),
+  },
+  {
+    _id: 2,
+    dateSale: new Date("2023-06-15T14:30:00Z"),
+    name: "Compra Anterior",
+    value: NumberDecimal("320000.00"),
+    tax: NumberDecimal("19200.00"),
+    idProperty: 1,
+    createdAt: new Date("2024-01-10T10:00:00Z"),
+    updatedAt: new Date("2024-01-10T10:00:00Z"),
+  },
+  {
+    _id: 3,
+    dateSale: new Date("2024-01-11T14:30:00Z"),
+    name: "Venta Inicial",
+    value: NumberDecimal("180000.00"),
+    tax: NumberDecimal("10800.00"),
+    idProperty: 2,
+    createdAt: new Date("2024-01-11T14:30:00Z"),
+    updatedAt: new Date("2024-01-11T14:30:00Z"),
+  },
+  {
+    _id: 4,
+    dateSale: new Date("2024-01-12T09:15:00Z"),
+    name: "Venta Inicial",
+    value: NumberDecimal("280000.00"),
+    tax: NumberDecimal("16800.00"),
+    idProperty: 3,
+    createdAt: new Date("2024-01-12T09:15:00Z"),
+    updatedAt: new Date("2024-01-12T09:15:00Z"),
+  },
+  {
+    _id: 5,
+    dateSale: new Date("2024-01-13T16:45:00Z"),
+    name: "Venta Inicial",
+    value: NumberDecimal("450000.00"),
+    tax: NumberDecimal("27000.00"),
+    idProperty: 4,
+    createdAt: new Date("2024-01-13T16:45:00Z"),
+    updatedAt: new Date("2024-01-13T16:45:00Z"),
+  },
+  {
+    _id: 6,
+    dateSale: new Date("2023-12-20T11:20:00Z"),
+    name: "Compra Anterior",
+    value: NumberDecimal("400000.00"),
+    tax: NumberDecimal("24000.00"),
+    idProperty: 5,
+    createdAt: new Date("2024-01-14T11:20:00Z"),
+    updatedAt: new Date("2024-01-14T11:20:00Z"),
+  },
+  {
+    _id: 7,
+    dateSale: new Date("2024-01-14T11:20:00Z"),
+    name: "Venta Actual",
+    value: NumberDecimal("420000.00"),
+    tax: NumberDecimal("25200.00"),
+    idProperty: 5,
+    createdAt: new Date("2024-01-14T11:20:00Z"),
+    updatedAt: new Date("2024-01-14T11:20:00Z"),
+  },
+]);
+
+var ownersCount = db.owners.countDocuments();
+var propertiesCount = db.properties.countDocuments();
+var imagesCount = db.property_images.countDocuments();
+var tracesCount = db.property_traces.countDocuments();
+
+print("✅ Complete sample data inserted successfully");
+print("👥 Owners inserted: " + ownersCount);
+print("🏠 Properties inserted: " + propertiesCount);
+print("📸 Property images inserted: " + imagesCount);
+print("📊 Property traces inserted: " + tracesCount);
