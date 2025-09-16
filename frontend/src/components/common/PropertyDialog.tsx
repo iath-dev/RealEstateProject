@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -23,34 +23,33 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/componen
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { usePropertyStore } from '@/store';
 import { formatDate, formatPrice } from '@/utils/format';
 
-interface PropertyDialogProps {
-  propertyId: number | null;
-  open: boolean;
-  onClose: () => void;
-}
+// TODO: Break down this component into smaller sub-components to improve readability and maintainability.
 
-export default function PropertyDialog({ propertyId, open, onClose }: PropertyDialogProps) {
+export default function PropertyDialog() {
+  const { selectedPropertyId, closeDialog } = usePropertyStore();
+
+  const open = useMemo(() => selectedPropertyId !== null, [selectedPropertyId]);
+
   const {
     data: property,
     isLoading,
     error,
     isError,
   } = useQuery({
-    queryKey: ['propertyDetail', propertyId],
-    queryFn: () => getPropertyDetail(propertyId!),
-    enabled: open && propertyId !== null,
+    queryKey: ['propertyDetail', selectedPropertyId],
+    queryFn: () => getPropertyDetail(selectedPropertyId!),
+    enabled: open && selectedPropertyId !== null,
   });
 
   const [currentImage, setCurrentImage] = useState(0);
 
-  function handleClose() {
-    onClose();
-  }
+  if (!open) return null;
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open} onOpenChange={closeDialog}>
       <DialogContent>
         {isLoading && (
           <Alert className="text-center py-8">

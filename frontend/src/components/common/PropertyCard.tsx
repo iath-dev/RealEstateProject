@@ -4,14 +4,16 @@ import { type Property } from '@/api/types';
 import ImageWithFallback from '@/components/common/ImageWithFallback';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { usePropertyStore } from '@/store';
 import { formatPrice } from '@/utils/format';
 
 interface PropertyCardProps {
   property: Property;
-  onClick?: (p: Property) => void;
 }
 
-export function PropertyCard({ property, onClick }: PropertyCardProps) {
+export function PropertyCard({ property }: PropertyCardProps) {
+  const { selectProperty } = usePropertyStore();
+
   return (
     <Card className="w-full overflow-hidden pt-0 hover:shadow-sm transition-all starting:opacity-0 opacity-100 duration-500 starting:scale-95 scale-100">
       <figure className="aspect-video w-full overflow-hidden">
@@ -36,7 +38,11 @@ export function PropertyCard({ property, onClick }: PropertyCardProps) {
       </CardContent>
 
       <CardFooter>
-        <Button className="w-full cursor-pointer" role="button" onClick={() => onClick!(property)}>
+        <Button
+          className="w-full cursor-pointer"
+          role="button"
+          onClick={() => selectProperty(property.idProperty)}
+        >
           <Eye />
           View Details
         </Button>

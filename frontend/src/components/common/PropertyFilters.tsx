@@ -9,18 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PopoverTrigger, Popover, PopoverContent } from '@/components/ui/popover';
 import { useBreakpoint } from '@/hooks/useMediaQuery';
-
-export type PropertyFiltersModel = {
-  name?: string;
-  address?: string;
-  minPrice?: number | null;
-  maxPrice?: number | null;
-};
-
-type Props = {
-  onChange?: (filters: PropertyFiltersModel) => void;
-  debounceMs?: number;
-};
+import { usePropertyStore, type PropertyFiltersModel } from '@/store';
 
 type FormValues = {
   name: string;
@@ -29,7 +18,11 @@ type FormValues = {
   maxPrice: string;
 };
 
-export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
+const DEBOUNCE_MS = 700;
+
+export function PropertyFilters() {
+  const { setFilters } = usePropertyStore();
+
   const isDesktop = useBreakpoint('desktop');
   const { control, reset, watch, setValue } = useForm<FormValues>({
     defaultValues: { name: '', address: '', minPrice: '', maxPrice: '' },
@@ -39,7 +32,7 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
 
   const [debouncedValues] = useDebounce(
     [watched.name, watched.address, watched.minPrice, watched.maxPrice],
-    debounceMs
+    DEBOUNCE_MS
   );
 
   const filters = useMemo(() => {
@@ -58,12 +51,12 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
       const json = JSON.stringify(filters || {});
       if (lastEmittedRef.current !== json) {
         lastEmittedRef.current = json;
-        onChange?.(filters);
+        setFilters?.(filters);
       }
     } catch {
-      onChange?.(filters);
+      setFilters?.(filters);
     }
-  }, [filters, onChange]);
+  }, [filters, setFilters]);
 
   const changedFields = useMemo(() => {
     const list: { key: keyof FormValues; label: string; value: string }[] = [];
@@ -169,6 +162,7 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
             onClick={() => clearField(f.key)}
             role="button"
             variant="outline"
+            aria-label={`Clear ${f.label}`}
             className="group cursor-pointer starting:opacity-0 starting:scale-95 scale-100 opacity-100 duration-500 transition-all ease-in-out"
             title={`Clear ${f.label}`}
           >
