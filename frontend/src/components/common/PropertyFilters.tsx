@@ -169,10 +169,10 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
             onClick={() => clearField(f.key)}
             role="button"
             variant="outline"
-            className="group cursor-pointer"
+            className="group cursor-pointer starting:opacity-0 starting:scale-95 scale-100 opacity-100 duration-500 transition-all ease-in-out"
             title={`Clear ${f.label}`}
           >
-            <XIcon className="hidden group-hover:inline-block" />
+            <XIcon className="hidden group-hover:inline-block starting:opacity-0 opacity-100 duration-300 ease-in-out" />
             {f.label}: {f.value}
           </Badge>
         ))}
@@ -181,7 +181,8 @@ export function PropertyFilters({ onChange, debounceMs = 400 }: Props) {
           <Badge
             onClick={clearAll}
             role="button"
-            className="cursor-pointer"
+            className="cursor-pointer starting:opacity-0 opacity-100  starting:scale-95 scale-100 duration-500 transition-all ease-in-out"
+            variant="destructive"
             title="Clear all filters"
           >
             Clear all

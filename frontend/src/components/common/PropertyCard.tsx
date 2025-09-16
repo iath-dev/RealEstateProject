@@ -13,7 +13,7 @@ interface PropertyCardProps {
 
 export function PropertyCard({ property, onClick }: PropertyCardProps) {
   return (
-    <Card className="w-full max-w-sm overflow-hidden pt-0 hover:shadow-sm transition-shadow">
+    <Card className="w-full overflow-hidden pt-0 hover:shadow-sm transition-all starting:opacity-0 opacity-100 duration-500 starting:scale-95 scale-100">
       <figure className="aspect-video w-full overflow-hidden">
         <ImageWithFallback
           src={property.image || 'https://placehold.co/600x400?text=No+Image'}

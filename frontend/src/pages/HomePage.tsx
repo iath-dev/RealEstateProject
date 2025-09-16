@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
     setSelectedPropertyId(null);
   }
   return (
-    <section className="min-h-screen bg-base-200 flex flex-col overflow-x-hidden">
+    <section className=" bg-base-200 flex flex-col overflow-x-hidden">
       <main className="container mx-auto px-2 sm:px-6 lg:px-8 py-6 flex-grow w-full">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-primary">Real Estate</h1>
         <div className="mt-6">
