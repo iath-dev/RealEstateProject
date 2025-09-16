@@ -1,8 +1,14 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import HomePage from '@/pages/HomePage';
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <main className="container mx-auto">
-      <h1 className="text-3xl text-red-500">Hello World</h1>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <HomePage />
+    </QueryClientProvider>
   );
 }
 
