@@ -1,3 +1,5 @@
+import type { PropertyFiltersModel } from '@/store';
+
 export interface Owner {
   idOwner: number;
   name: string;
@@ -55,3 +57,8 @@ export type UpdateOwnerPayload = Partial<CreateOwnerPayload>;
 
 export type CreatePropertyPayload = Omit<Property, 'idProperty' | 'ownerName' | 'image'>;
 export type UpdatePropertyPayload = Partial<CreatePropertyPayload>;
+
+export interface GetPropertiesRequest extends PropertyFiltersModel {
+  page?: number;
+  pageSize?: number;
+}
