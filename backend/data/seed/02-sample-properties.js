@@ -68,119 +68,41 @@ const owners = [
 db.owners.insertMany(owners);
 
 // Insert properties
-const properties = [
-  {
-    _id: 1,
-    name: "Casa Moderna en Zona Norte",
-    address: "Av. Principal 123, Zona Norte, Cali",
-    price: NumberDecimal("350000.00"),
-    codeInternal: "PROP-2024-001",
-    year: 2020,
-    idOwner: 1,
-    createdAt: new Date("2024-01-10T10:00:00Z"),
-    updatedAt: new Date("2024-01-10T10:00:00Z"),
-  },
-  {
-    _id: 2,
-    name: "Apartamento Céntrico con Vista",
-    address: "Calle 5 #45-67, Centro, Cali",
-    price: NumberDecimal("180000.00"),
-    codeInternal: "PROP-2024-002",
-    year: 2018,
-    idOwner: 2,
-    createdAt: new Date("2024-01-11T14:30:00Z"),
-    updatedAt: new Date("2024-01-11T14:30:00Z"),
-  },
-  {
-    _id: 3,
-    name: "Casa Familiar con Jardín",
-    address: "Carrera 15 #78-90, Normandía, Cali",
-    price: NumberDecimal("280000.00"),
-    codeInternal: "PROP-2024-003",
-    year: 2019,
-    idOwner: 3,
-    createdAt: new Date("2024-01-12T09:15:00Z"),
-    updatedAt: new Date("2024-01-12T09:15:00Z"),
-  },
-  {
-    _id: 4,
-    name: "Penthouse de Lujo",
-    address: "Av. Roosevelt #34-56, Granada, Cali",
-    price: NumberDecimal("450000.00"),
-    codeInternal: "PROP-2024-004",
-    year: 2021,
-    idOwner: 1,
-    createdAt: new Date("2024-01-13T16:45:00Z"),
-    updatedAt: new Date("2024-01-13T16:45:00Z"),
-  },
-  {
-    _id: 5,
-    name: "Casa de Campo con Piscina",
-    address: "Km 18 Vía Pance, Cali",
-    price: NumberDecimal("420000.00"),
-    codeInternal: "PROP-2024-005",
-    year: 2022,
-    idOwner: 4,
-    createdAt: new Date("2024-01-14T11:20:00Z"),
-    updatedAt: new Date("2024-01-14T11:20:00Z"),
-  },
-  {
-    _id: 6,
-    name: "Apartamento Estudiantil",
-    address: "Calle 70 #23-45, Cerca Universidad, Cali",
-    price: NumberDecimal("120000.00"),
-    codeInternal: "PROP-2024-006",
-    year: 2017,
-    idOwner: 5,
-    createdAt: new Date("2024-01-15T08:00:00Z"),
-    updatedAt: new Date("2024-01-15T08:00:00Z"),
-  },
-  {
-    _id: 7,
-    name: "Casa Tradicional Restaurada",
-    address: "Barrio San Antonio, Cali",
-    price: NumberDecimal("220000.00"),
-    codeInternal: "PROP-2024-007",
-    year: 1995,
-    idOwner: 2,
-    createdAt: new Date("2024-01-16T13:10:00Z"),
-    updatedAt: new Date("2024-01-16T13:10:00Z"),
-  },
-  {
-    _id: 8,
-    name: "Loft Industrial",
-    address: "Zona Rosa, Cali",
-    price: NumberDecimal("190000.00"),
-    codeInternal: "PROP-2024-008",
-    year: 2016,
-    idOwner: 3,
-    createdAt: new Date("2024-01-17T15:30:00Z"),
-    updatedAt: new Date("2024-01-17T15:30:00Z"),
-  },
-  {
-    _id: 9,
-    name: "Villa con Vista a las Montañas",
-    address: "Alto de las Palmas, Cali",
-    price: NumberDecimal("520000.00"),
-    codeInternal: "PROP-2024-009",
-    year: 2023,
-    idOwner: 6,
-    createdAt: new Date("2024-01-18T10:45:00Z"),
-    updatedAt: new Date("2024-01-18T10:45:00Z"),
-  },
-  {
-    _id: 10,
-    name: "Duplex en Conjunto Cerrado",
-    address: "Ciudad Jardín, Cali",
-    price: NumberDecimal("310000.00"),
-    codeInternal: "PROP-2024-010",
-    year: 2020,
-    idOwner: 4,
-    createdAt: new Date("2024-01-19T12:00:00Z"),
-    updatedAt: new Date("2024-01-19T12:00:00Z"),
-  },
-];
-db.properties.insertMany(properties);
+const propertyTypes = ["Casa", "Apartamento", "Penthouse", "Loft", "Villa", "Duplex", "Finca"];
+const propertyAdjectives = ["Moderno", "Lujoso", "Amplio", "Céntrico", "Restaurado", "Familiar", "Industrial", "Tradicional"];
+const propertyFeatures = ["con Vista", "con Jardín", "con Piscina", "en Zona Norte", "en Conjunto Cerrado", "cerca a Universidad"];
+const streetTypes = ["Calle", "Carrera", "Avenida", "Transversal"];
+const neighborhoods = ["El Peñón", "Granada", "Normandía", "San Antonio", "Ciudad Jardín", "Pance", "Centro", "Zona Rosa", "Alto de las Palmas"];
+
+function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const generatedProperties = [];
+const numberOfProperties = 40;
+const existingOwnerIds = owners.map(o => o._id);
+
+for (let i = 1; i <= numberOfProperties; i++) {
+    const name = `${getRandomItem(propertyTypes)} ${getRandomItem(propertyAdjectives)} ${getRandomItem(propertyFeatures)}`;
+    const address = `${getRandomItem(streetTypes)} ${Math.floor(Math.random() * 100) + 1} #${Math.floor(Math.random() * 100) + 1}-${Math.floor(Math.random() * 100) + 1}, ${getRandomItem(neighborhoods)}, Cali`;
+    const price = NumberDecimal(String(Math.floor(Math.random() * (8000 - 1000 + 1) + 1000) * 100)); // 100,000 to 800,000
+    const year = Math.floor(Math.random() * (2024 - 1990 + 1)) + 1990;
+    const creationDate = new Date(new Date() - Math.floor(Math.random() * 365 * 24 * 60 * 60 * 1000)); // Within the last year
+
+    generatedProperties.push({
+        _id: i,
+        name: name,
+        address: address,
+        price: price,
+        codeInternal: `PROP-2024-${String(i).padStart(3, '0')}`,
+        year: year,
+        idOwner: getRandomItem(existingOwnerIds),
+        createdAt: creationDate,
+        updatedAt: creationDate,
+    });
+}
+
+db.properties.insertMany(generatedProperties);
 
 // Get all properties to create related data
 const allProperties = db.properties.find().toArray();
