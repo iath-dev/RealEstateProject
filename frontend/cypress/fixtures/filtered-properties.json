@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "idProperty": 999,
+      "name": "Villa Paradise Resort",
+      "address": "123 Paradise Avenue, Exclusive Area",
+      "price": 750000,
+      "codeInternal": "VILLA001",
+      "year": 2024,
+      "idOwner": 99,
+      "ownerName": "Villa Owner",
+      "image": "https://placehold.co/600x400?text=Villa+Paradise"
+    }
+  ],
+  "totalCount": 1,
+  "page": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "hasNextPage": false,
+  "hasPreviousPage": false
+}

@@ -1,0 +1,60 @@
+{
+  "idProperty": 1,
+  "name": "Detailed Modern Downtown Apartment",
+  "address": "123 Main Street, Downtown District",
+  "price": 450000,
+  "codeInternal": "DETAIL001",
+  "year": 2022,
+  "owner": {
+    "idOwner": 1,
+    "name": "John Smith",
+    "address": "789 Owner Avenue, Owner District",
+    "photo": "https://placehold.co/150x150?text=John+Smith",
+    "birthday": "1985-03-15T00:00:00Z"
+  },
+  "images": [
+    {
+      "idPropertyImage": 1,
+      "file": "https://placehold.co/800x600?text=Living+Room",
+      "enabled": true
+    },
+    {
+      "idPropertyImage": 2,
+      "file": "https://placehold.co/800x600?text=Kitchen",
+      "enabled": true
+    },
+    {
+      "idPropertyImage": 3,
+      "file": "https://placehold.co/800x600?text=Bedroom",
+      "enabled": true
+    },
+    {
+      "idPropertyImage": 4,
+      "file": "https://placehold.co/800x600?text=Bathroom",
+      "enabled": true
+    }
+  ],
+  "traces": [
+    {
+      "idPropertyTrace": 1,
+      "dateSale": "2022-01-15T00:00:00Z",
+      "name": "Initial Purchase",
+      "value": 420000,
+      "tax": 21000
+    },
+    {
+      "idPropertyTrace": 2,
+      "dateSale": "2023-06-20T00:00:00Z",
+      "name": "Market Revaluation",
+      "value": 450000,
+      "tax": 22500
+    },
+    {
+      "idPropertyTrace": 3,
+      "dateSale": "2024-01-10T00:00:00Z",
+      "name": "Insurance Appraisal",
+      "value": 465000,
+      "tax": 23250
+    }
+  ]
+}

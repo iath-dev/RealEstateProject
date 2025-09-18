@@ -10,18 +10,21 @@ import usePropertyDetails from '@/hooks/usePropertyDetails';
 const PropertyDialogTitle: React.FC = () => {
   const { data: property, isLoading, isError } = usePropertyDetails();
 
-  if (isLoading) return <Skeleton className="w-full rounded-lg h-12" />;
+  if (isLoading) return <Skeleton data-testid="skeleton" className="w-full rounded-lg h-12" />;
 
   if (!property || isError) return null;
 
   return (
-    <div className="space-y-3 starting:opacity-0 opacity-100 transition-all">
+    <div
+      className="space-y-3 starting:opacity-0 opacity-100 transition-all"
+      data-testid="dialog-title"
+    >
       <DialogTitle className="text-3xl leading-tight">{property.name}</DialogTitle>
       <div className="flex flex-wrap gap-2">
-        <Badge>
+        <Badge data-testid="dialog-title-code">
           <Hash /> {property.codeInternal}
         </Badge>
-        <Badge variant="secondary">
+        <Badge variant="secondary" data-testid="dialog-title-year">
           <Calendar /> {property.year}
         </Badge>
       </div>

@@ -31,10 +31,10 @@ export default function PropertyDialog() {
       </VisuallyHidden>
       <DialogContent>
         {isError && (
-          <Alert>
+          <Alert variant="destructive">
             <AlertTitle>
               <Trash2 />
-              {error.message}
+              Error: {error.message}
             </AlertTitle>
           </Alert>
         )}

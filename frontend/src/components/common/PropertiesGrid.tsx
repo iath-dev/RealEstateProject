@@ -41,9 +41,15 @@ const PropertiesGrid: React.FC = () => {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 mt-8">
       {isError && (
-        <Alert variant="destructive" className="col-span-full py-8">
+        <Alert role="alert" variant="destructive" className="col-span-full py-8">
           <Trash2Icon />
           <AlertTitle>Error: {error?.message || "Couldn't load properties"}</AlertTitle>
+        </Alert>
+      )}
+      {isLoading && (
+        <Alert role="alert" className="col-span-full py-8">
+          <Loader className="animate-spin" />
+          <AlertTitle>Loading properties...</AlertTitle>
         </Alert>
       )}
       {data?.pages.flatMap((page) =>
@@ -54,16 +60,14 @@ const PropertiesGrid: React.FC = () => {
       {!isFetchingNextPage && hasNextPage && (
         <Skeleton ref={lastElementRef} className="w-full aspect-square rounded-lg"></Skeleton>
       )}
-      {isLoading ||
-        isFetching ||
-        (isFetchingNextPage && (
-          <Alert className="col-span-full py-8">
-            <Loader className="animate-spin" />
-            <AlertTitle>Loading properties...</AlertTitle>
-          </Alert>
-        ))}
+      {isFetchingNextPage && (
+        <Alert role="alert" className="col-span-full py-8">
+          <Loader className="animate-spin" />
+          <AlertTitle>Loading more properties...</AlertTitle>
+        </Alert>
+      )}
       {!hasNextPage && !isLoading && (
-        <Alert variant="default" className="col-span-full text-center border-none">
+        <Alert role="alert" variant="default" className="col-span-full text-center border-none">
           <AlertTitle>No more properties available at the moment</AlertTitle>
         </Alert>
       )}

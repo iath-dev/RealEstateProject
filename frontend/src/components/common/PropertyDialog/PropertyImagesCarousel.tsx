@@ -11,7 +11,8 @@ const PropertyImagesCarousel: React.FC = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const { data: property, isLoading, isError } = usePropertyDetails();
 
-  if (isLoading) return <Skeleton className="w-full rounded-lg aspect-video" />;
+  if (isLoading)
+    return <Skeleton data-testid="skeleton" className="w-full rounded-lg aspect-video" />;
 
   if (!property || isError || property.images.length == 0) return null;
 
@@ -21,6 +22,7 @@ const PropertyImagesCarousel: React.FC = () => {
     <section>
       <figure className="aspect-video w-full overflow-hidden rounded-lg relative">
         <ImageWithFallback
+          data-testid="main-image"
           src={images[currentImage].file}
           alt={`${property.name} image ${images[currentImage].idPropertyImage}`}
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
@@ -31,9 +33,10 @@ const PropertyImagesCarousel: React.FC = () => {
         </figcaption>
       </figure>
       <div
+        data-testid="property-images"
         className={twMerge(
-          images.length > 1 && 'hidden',
           'flex gap-2 mt-1 relative scroll-smooth snap-x snap-mandatory p-0.5',
+          images.length <= 1 && 'hidden',
           '[&::-webkit-scrollbar]:hidden overflow-x-auto',
           '[anchor-name:--images-carousel]',
           '[&::scroll-button(*):disabled]:opacity-10 [&::scroll-button(*)]:transition-colors [&::scroll-button(*)]:duration-300 [&::scroll-button(*)]:bg-primary/90 [&::scroll-button(*)]:text-white [&::scroll-button(*)]:font-medium [&::scroll-button(*)]:text-center  [&::scroll-button(*)]:inline-flex [&::scroll-button(*)]:items-center  [&::scroll-button(*)]:rounded-full [&::scroll-button(*)]:text-sm [&::scroll-button(*)]:absolute [&::scroll-button(*)]:[position-anchor:--images-carousel] [&::scroll-button(*)]:[align-self:anchor-center] [&::scroll-button(*)]:z-10 [&::scroll-button(*)]:cursor-pointer [&::scroll-button(*)]:border-none',
@@ -43,6 +46,7 @@ const PropertyImagesCarousel: React.FC = () => {
       >
         {images.map((img, index) => (
           <ImageWithFallback
+            data-testid="property-image"
             key={img.idPropertyImage}
             src={img.file}
             alt={`Image ${index + 1}`}

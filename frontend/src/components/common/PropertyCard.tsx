@@ -15,7 +15,10 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const { selectProperty } = usePropertyStore();
 
   return (
-    <Card className="w-full overflow-hidden pt-0 hover:shadow-sm transition-all starting:opacity-0 opacity-100 duration-500 starting:scale-95 scale-100">
+    <Card
+      data-testid="property-card"
+      className="w-full overflow-hidden pt-0 hover:shadow-sm transition-all starting:opacity-0 opacity-100 duration-500 starting:scale-95 scale-100"
+    >
       <figure className="aspect-video w-full overflow-hidden">
         <ImageWithFallback
           src={property.image || 'https://placehold.co/600x400?text=No+Image'}
@@ -24,7 +27,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
         />
       </figure>
       <CardHeader>
-        <CardTitle className="line-clamp-1">{property.name}</CardTitle>
+        <CardTitle data-testid="property-name" className="line-clamp-1 truncate">
+          {property.name}
+        </CardTitle>
       </CardHeader>
 
       <CardContent>

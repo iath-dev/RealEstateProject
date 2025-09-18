@@ -1,0 +1,120 @@
+{
+  "items": [
+    {
+      "idProperty": 1,
+      "name": "Modern Downtown Apartment",
+      "address": "123 Main Street, Downtown",
+      "price": 450000,
+      "codeInternal": "PROP001",
+      "year": 2022,
+      "idOwner": 1,
+      "ownerName": "John Smith",
+      "image": "https://placehold.co/600x400?text=Modern+Apartment"
+    },
+    {
+      "idProperty": 2,
+      "name": "Suburban Family Home",
+      "address": "456 Oak Avenue, Suburbs",
+      "price": 650000,
+      "codeInternal": "PROP002",
+      "year": 2021,
+      "idOwner": 2,
+      "ownerName": "Sarah Johnson",
+      "image": "https://placehold.co/600x400?text=Family+Home"
+    },
+    {
+      "idProperty": 3,
+      "name": "Luxury Waterfront Condo",
+      "address": "789 Beach Drive, Waterfront",
+      "price": 850000,
+      "codeInternal": "PROP003",
+      "year": 2023,
+      "idOwner": 3,
+      "ownerName": "Michael Brown",
+      "image": "https://placehold.co/600x400?text=Luxury+Condo"
+    },
+    {
+      "idProperty": 4,
+      "name": "Cozy Studio Loft",
+      "address": "321 Art District, Creative Quarter",
+      "price": 320000,
+      "codeInternal": "PROP004",
+      "year": 2020,
+      "idOwner": 4,
+      "ownerName": "Emily Davis",
+      "image": "https://placehold.co/600x400?text=Studio+Loft"
+    },
+    {
+      "idProperty": 5,
+      "name": "Historic Victorian House",
+      "address": "654 Heritage Lane, Old Town",
+      "price": 750000,
+      "codeInternal": "PROP005",
+      "year": 1895,
+      "idOwner": 5,
+      "ownerName": "Robert Wilson",
+      "image": "https://placehold.co/600x400?text=Victorian+House"
+    },
+    {
+      "idProperty": 6,
+      "name": "Modern Penthouse",
+      "address": "777 Sky Tower, City Center",
+      "price": 1200000,
+      "codeInternal": "PROP006",
+      "year": 2024,
+      "idOwner": 6,
+      "ownerName": "Jennifer Martinez",
+      "image": "https://placehold.co/600x400?text=Penthouse"
+    },
+    {
+      "idProperty": 7,
+      "name": "Rustic Country Cabin",
+      "address": "888 Mountain View, Rural Area",
+      "price": 280000,
+      "codeInternal": "PROP007",
+      "year": 2019,
+      "idOwner": 7,
+      "ownerName": "David Anderson",
+      "image": "https://placehold.co/600x400?text=Country+Cabin"
+    },
+    {
+      "idProperty": 8,
+      "name": "Contemporary Townhouse",
+      "address": "999 Modern Row, New Development",
+      "price": 520000,
+      "codeInternal": "PROP008",
+      "year": 2023,
+      "idOwner": 8,
+      "ownerName": "Lisa Thompson",
+      "image": "https://placehold.co/600x400?text=Townhouse"
+    },
+    {
+      "idProperty": 9,
+      "name": "Eco-Friendly Smart Home",
+      "address": "111 Green Street, Sustainable District",
+      "price": 680000,
+      "codeInternal": "PROP009",
+      "year": 2024,
+      "idOwner": 9,
+      "ownerName": "Mark Garcia",
+      "image": "https://placehold.co/600x400?text=Smart+Home"
+    },
+    {
+      "idProperty": 10,
+      "name": "Urban Industrial Loft",
+      "address": "222 Factory Street, Industrial Zone",
+      "price": 480000,
+      "codeInternal": "PROP010",
+      "year": 2021,
+      "idOwner": 10,
+      "ownerName": "Amanda Rodriguez",
+      "image": "https://placehold.co/600x400?text=Industrial+Loft"
+    }
+  ],
+  "totalCount": 100,
+  "page": 1,
+  "pageSize": 10,
+  "totalPages": 10,
+  "hasNextPage": true,
+  "hasPreviousPage": false
+}

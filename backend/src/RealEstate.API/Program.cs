@@ -66,7 +66,12 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173")
+                .WithOrigins(
+                    "http://127.0.0.1:5173",
+                    "http://localhost:5173",
+                    "http://127.0.0.1:3000",
+                    "http://localhost:3000"
+                )
                 .AllowAnyMethod() // GET, POST, PUT, DELETE, etc.
                 .AllowAnyHeader() // Content-Type, Authorization, etc.
                 .AllowCredentials() // Permite cookies y headers de autenticación
