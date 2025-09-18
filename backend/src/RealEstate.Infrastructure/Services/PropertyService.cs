@@ -71,7 +71,24 @@ namespace RealEstate.Infrastructure.Services
         {
             var property = await _propertyRepository.GetWithDetailsAsync(id);
 
-            return property == null ? null : _mapper.Map<PropertyDetailDto>(property);
+            if (property == null)
+            {
+                return null;
+            }
+
+            if (property.Owner == null)
+            {
+                property.Owner = await _ownerRepository.GetByIdAsync(property.IdOwner);
+            }
+
+            var images = await _propertyImageRepository.GetByPropertyIdAsync(id);
+            var traces = await _propertyTraceRepository.GetByPropertyIdAsync(id);
+
+            var propertyDetailDto = _mapper.Map<PropertyDetailDto>(property);
+            propertyDetailDto.Images = _mapper.Map<List<PropertyImageDto>>(images);
+            propertyDetailDto.Traces = _mapper.Map<List<PropertyTraceDto>>(traces);
+
+            return propertyDetailDto;
         }
 
         /// <summary>

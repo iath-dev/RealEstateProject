@@ -167,8 +167,8 @@ namespace RealEstate.Tests.Services
             result.Name.Should().Be(property.Name);
             result.Owner.Should().NotBeNull();
             result.Owner.Name.Should().Be(property.Owner.Name);
-            result.Images.Should().HaveCount(2);
-            result.Traces.Should().HaveCount(2);
+            result.Images.Should().HaveCount(images.Count);
+            result.Traces.Should().HaveCount(traces.Count);
         }
 
         [Test]
