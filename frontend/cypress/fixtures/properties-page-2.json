@@ -1,0 +1,65 @@
+{
+  "items": [
+    {
+      "idProperty": 11,
+      "name": "Page 2 Property 1",
+      "address": "1100 Second Page Street",
+      "price": 550000,
+      "codeInternal": "PROP011",
+      "year": 2023,
+      "idOwner": 11,
+      "ownerName": "Page Owner 1",
+      "image": "https://placehold.co/600x400?text=Page+2+Property+1"
+    },
+    {
+      "idProperty": 12,
+      "name": "Page 2 Property 2",
+      "address": "1200 Second Page Avenue",
+      "price": 620000,
+      "codeInternal": "PROP012",
+      "year": 2023,
+      "idOwner": 12,
+      "ownerName": "Page Owner 2",
+      "image": "https://placehold.co/600x400?text=Page+2+Property+2"
+    },
+    {
+      "idProperty": 13,
+      "name": "Page 2 Property 3",
+      "address": "1300 Second Page Boulevard",
+      "price": 490000,
+      "codeInternal": "PROP013",
+      "year": 2022,
+      "idOwner": 13,
+      "ownerName": "Page Owner 3",
+      "image": "https://placehold.co/600x400?text=Page+2+Property+3"
+    },
+    {
+      "idProperty": 14,
+      "name": "Page 2 Property 4",
+      "address": "1400 Second Page Drive",
+      "price": 680000,
+      "codeInternal": "PROP014",
+      "year": 2024,
+      "idOwner": 14,
+      "ownerName": "Page Owner 4",
+      "image": "https://placehold.co/600x400?text=Page+2+Property+4"
+    },
+    {
+      "idProperty": 15,
+      "name": "Page 2 Property 5",
+      "address": "1500 Second Page Circle",
+      "price": 730000,
+      "codeInternal": "PROP015",
+      "year": 2023,
+      "idOwner": 15,
+      "ownerName": "Page Owner 5",
+      "image": "https://placehold.co/600x400?text=Page+2+Property+5"
+    }
+  ],
+  "totalCount": 100,
+  "page": 2,
+  "pageSize": 10,
+  "totalPages": 10,
+  "hasNextPage": true,
+  "hasPreviousPage": true
+}

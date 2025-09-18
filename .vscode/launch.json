@@ -1,0 +1,31 @@
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch API",
+      "type": "dotnet",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/backend/src/RealEstate.API/bin/Debug/net8.0/RealEstate.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/backend/src/RealEstate.API",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "name": "Attach to API",
+      "type": "dotnet",
+      "request": "attach"
+    }
+  ]
+}

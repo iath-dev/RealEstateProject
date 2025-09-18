@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "idProperty": 101,
+      "name": "Mid-Range Property 1",
+      "address": "500 Affordable Street",
+      "price": 350000,
+      "codeInternal": "MID001",
+      "year": 2021,
+      "idOwner": 101,
+      "ownerName": "Mid Range Owner 1",
+      "image": "https://placehold.co/600x400?text=Mid+Range+1"
+    },
+    {
+      "idProperty": 102,
+      "name": "Mid-Range Property 2",
+      "address": "600 Budget Avenue",
+      "price": 420000,
+      "codeInternal": "MID002",
+      "year": 2022,
+      "idOwner": 102,
+      "ownerName": "Mid Range Owner 2",
+      "image": "https://placehold.co/600x400?text=Mid+Range+2"
+    },
+    {
+      "idProperty": 103,
+      "name": "Mid-Range Property 3",
+      "address": "700 Value Boulevard",
+      "price": 480000,
+      "codeInternal": "MID003",
+      "year": 2023,
+      "idOwner": 103,
+      "ownerName": "Mid Range Owner 3",
+      "image": "https://placehold.co/600x400?text=Mid+Range+3"
+    }
+  ],
+  "totalCount": 3,
+  "page": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "hasNextPage": false,
+  "hasPreviousPage": false
+}

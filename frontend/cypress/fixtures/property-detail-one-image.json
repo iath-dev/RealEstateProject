@@ -1,0 +1,31 @@
+{
+  "idProperty": 2,
+  "name": "Modern Downtown Loft",
+  "address": "456 Main Street, New York, NY",
+  "price": 1200000,
+  "codeInternal": "L002",
+  "year": 2020,
+  "owner": {
+    "idOwner": 102,
+    "name": "Jane Smith",
+    "address": "200 Park Avenue, New York, NY",
+    "photo": "https://placehold.co/100x100/CCCCCC/FFFFFF/png?text=JS",
+    "birthday": "1985-08-22T00:00:00Z"
+  },
+  "images": [
+    {
+      "idPropertyImage": 20,
+      "file": "https://placehold.co/800x600/CCCCCC/FFFFFF/png?text=Loft+View",
+      "enabled": true
+    }
+  ],
+  "traces": [
+    {
+      "idPropertyTrace": 2001,
+      "dateSale": "2021-03-15T12:00:00Z",
+      "name": "Initial Listing",
+      "value": 1250000,
+      "tax": 62500
+    }
+  ]
+}

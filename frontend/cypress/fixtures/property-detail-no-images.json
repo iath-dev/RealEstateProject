@@ -1,0 +1,25 @@
+{
+  "idProperty": 3,
+  "name": "Cozy Suburban Home",
+  "address": "789 Maple Avenue, Chicago, IL",
+  "price": 750000,
+  "codeInternal": "H003",
+  "year": 2018,
+  "owner": {
+    "idOwner": 103,
+    "name": "Peter Jones",
+    "address": "300 Elm Street, Chicago, IL",
+    "photo": "https://placehold.co/100x100/E6E6E6/000000/png?text=PJ",
+    "birthday": "1978-11-30T00:00:00Z"
+  },
+  "images": [],
+  "traces": [
+    {
+      "idPropertyTrace": 3001,
+      "dateSale": "2019-07-01T10:00:00Z",
+      "name": "Initial Listing",
+      "value": 760000,
+      "tax": 38000
+    }
+  ]
+}
